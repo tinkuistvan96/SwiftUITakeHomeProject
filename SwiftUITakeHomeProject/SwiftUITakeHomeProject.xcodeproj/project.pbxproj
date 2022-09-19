@@ -21,6 +21,7 @@
 		4F77238028D8806A00B76087 /* PeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F77237F28D8806A00B76087 /* PeopleView.swift */; };
 		4F77238228D88D5500B76087 /* PersonItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F77238128D88D5500B76087 /* PersonItemView.swift */; };
 		4F77238528D88D9A00B76087 /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F77238428D88D9A00B76087 /* PillView.swift */; };
+		4F77238728D8A44400B76087 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F77238628D8A44400B76087 /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		4F77237F28D8806A00B76087 /* PeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleView.swift; sourceTree = "<group>"; };
 		4F77238128D88D5500B76087 /* PersonItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonItemView.swift; sourceTree = "<group>"; };
 		4F77238428D88D9A00B76087 /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
+		4F77238628D8A44400B76087 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +170,7 @@
 		4F77236728D8636900B76087 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4F77238628D8A44400B76087 /* DetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				4F77235D28D85EF400B76087 /* Symbols.swift in Sources */,
 				4F77238028D8806A00B76087 /* PeopleView.swift in Sources */,
 				4F77235F28D8607E00B76087 /* Theme.swift in Sources */,
+				4F77238728D8A44400B76087 /* DetailView.swift in Sources */,
 				4F77237628D86B4900B76087 /* UserDetailResponse.swift in Sources */,
 				4F77234E28D85CF000B76087 /* SwiftUITakeHomeProjectApp.swift in Sources */,
 				4F77237828D86BBA00B76087 /* UsersResponse.swift in Sources */,

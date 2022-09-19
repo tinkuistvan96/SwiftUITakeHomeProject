@@ -68,9 +68,10 @@ private extension DetailView {
                     .resizable()
                     .scaledToFill()
             } placeholder: {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Theme.detailBackground)
+                ZStack {
+                    Theme.detailBackground
+                    ProgressView()
+                }
             }
             .frame(height: 250)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
@@ -144,7 +145,7 @@ private extension DetailView {
         
         Text(userInfo?.data.lastName ?? "-")
             .font(
-                .system(.caption, design: .rounded)
+                .system(.subheadline, design: .rounded)
             )
         
         Divider()
@@ -160,7 +161,7 @@ private extension DetailView {
         
         Text(userInfo?.data.email ?? "-")
             .font(
-                .system(.caption, design: .rounded)
+                .system(.subheadline, design: .rounded)
             )
     }
 }

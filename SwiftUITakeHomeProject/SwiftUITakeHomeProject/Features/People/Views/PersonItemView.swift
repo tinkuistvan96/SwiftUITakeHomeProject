@@ -17,11 +17,13 @@ struct PersonItemView: View {
                     .resizable()
                     .scaledToFill()
             } placeholder: {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Theme.detailBackground)
+                ZStack {
+                    Theme.detailBackground
+                    ProgressView()
+                }
             }
             .frame(height: 130)
+            .clipped()
             
             VStack(alignment: .leading) {
                 PillView(id: user.id)

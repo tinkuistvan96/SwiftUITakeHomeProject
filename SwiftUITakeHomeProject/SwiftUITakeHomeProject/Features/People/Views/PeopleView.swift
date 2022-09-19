@@ -39,11 +39,14 @@ struct PeopleView: View {
                 }
             }
             .onAppear {
-                do {
-                    let res = try StaticJSONMapper.decode(file: "UserStaticData", type: UsersResponse.self)
-                    users = res.data
-                } catch {
-                    print(error)
+                NetworkingManager.shared.request(absoluteURL: "https://reqres.in/api/users",
+                                                 type: UsersResponse.self) { result in
+                    switch result {
+                    case .success(let response):
+                        users = response.data
+                    case .failure(let error):
+                        print(error)
+                    }
                 }
             }
             .sheet(isPresented: $showCreateView) {

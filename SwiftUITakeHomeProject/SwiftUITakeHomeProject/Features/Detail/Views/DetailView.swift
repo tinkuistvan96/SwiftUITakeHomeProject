@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct DetailView: View {
-    @State private var userInfo: UserDetailResponse?
+    let userId: Int
+    @StateObject var vm = DetailViewModel()
     
     var body: some View {
         ZStack {
@@ -30,11 +31,7 @@ struct DetailView: View {
             }
         }
         .onAppear {
-            do {
-                userInfo = try StaticJSONMapper.decode(file: "SingleUserData", type: UserDetailResponse.self)
-            } catch {
-                print(error)
-            }
+            vm.fetchUserInfo(id: userId)
         }
         .navigationTitle("Details")
     }
@@ -48,7 +45,7 @@ struct DetailView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            DetailView()
+            DetailView(userId: 1)
         }
     }
 }
@@ -61,7 +58,7 @@ private extension DetailView {
     
     @ViewBuilder
     var avatar: some View {
-        if let avatarAbsoluteString = userInfo?.data.avatar,
+        if let avatarAbsoluteString = vm.userInfo?.data.avatar,
            let avatarURL = URL(string: avatarAbsoluteString) {
             AsyncImage(url: avatarURL) { image in
                 image
@@ -80,9 +77,9 @@ private extension DetailView {
     
     @ViewBuilder
     var link: some View {
-        if let supportAbsoluteString = userInfo?.support.url,
+        if let supportAbsoluteString = vm.userInfo?.support.url,
            let supportUrl = URL(string: supportAbsoluteString),
-           let supportTxt = userInfo?.support.text {
+           let supportTxt = vm.userInfo?.support.text {
             Link(destination: supportUrl) {
                 
                 VStack(alignment: .leading, spacing: 8) {
@@ -109,7 +106,7 @@ private extension DetailView {
     
     var general: some View {
         VStack(alignment: .leading, spacing: 8) {
-            PillView(id: userInfo?.data.id ?? 0)
+            PillView(id: vm.userInfo?.data.id ?? 0)
             Group {
                 firstName
                 lastName
@@ -127,7 +124,7 @@ private extension DetailView {
                 .weight(.semibold)
             )
         
-        Text(userInfo?.data.firstName ?? "-")
+        Text(vm.userInfo?.data.firstName ?? "-")
             .font(
                 .system(.subheadline, design: .rounded)
             )
@@ -143,7 +140,7 @@ private extension DetailView {
             )
             .bold()
         
-        Text(userInfo?.data.lastName ?? "-")
+        Text(vm.userInfo?.data.lastName ?? "-")
             .font(
                 .system(.subheadline, design: .rounded)
             )
@@ -159,7 +156,7 @@ private extension DetailView {
             )
             .bold()
         
-        Text(userInfo?.data.email ?? "-")
+        Text(vm.userInfo?.data.email ?? "-")
             .font(
                 .system(.subheadline, design: .rounded)
             )

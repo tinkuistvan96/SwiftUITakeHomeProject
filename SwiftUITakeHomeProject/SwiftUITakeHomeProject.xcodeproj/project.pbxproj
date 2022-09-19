@@ -25,6 +25,7 @@
 		4F77238928D8FE7B00B76087 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F77238828D8FE7A00B76087 /* CreateView.swift */; };
 		4F77238C28D9091500B76087 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F77238B28D9091500B76087 /* NetworkingManager.swift */; };
 		4F77238E28D9184A00B76087 /* PeopleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F77238D28D9184A00B76087 /* PeopleViewModel.swift */; };
+		4F77239028D91D6100B76087 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F77238F28D91D6100B76087 /* DetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		4F77238828D8FE7A00B76087 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
 		4F77238B28D9091500B76087 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		4F77238D28D9184A00B76087 /* PeopleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewModel.swift; sourceTree = "<group>"; };
+		4F77238F28D91D6100B76087 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 		4F77236928D8637300B76087 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				4F77238F28D91D6100B76087 /* DetailViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				4F77238228D88D5500B76087 /* PersonItemView.swift in Sources */,
 				4F77238E28D9184A00B76087 /* PeopleViewModel.swift in Sources */,
 				4F77238928D8FE7B00B76087 /* CreateView.swift in Sources */,
+				4F77239028D91D6100B76087 /* DetailViewModel.swift in Sources */,
 				4F77237B28D86E7700B76087 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

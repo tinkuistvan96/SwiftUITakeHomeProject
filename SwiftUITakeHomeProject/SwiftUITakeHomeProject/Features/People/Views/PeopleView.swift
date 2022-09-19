@@ -12,6 +12,7 @@ struct PeopleView: View {
         GridItem(.flexible()), GridItem(.flexible())
     ]
     
+    @State private var showCreateView = false
     @State private var users: [User] = []
     
     var body: some View {
@@ -45,6 +46,9 @@ struct PeopleView: View {
                     print(error)
                 }
             }
+            .sheet(isPresented: $showCreateView) {
+                CreateView()
+            }
         }
     }
 }
@@ -58,7 +62,7 @@ struct PeopleView_Previews: PreviewProvider {
 extension PeopleView {
     var create: some View {
         Button {
-            //Create User
+            showCreateView.toggle()
         } label: {
             Symbols.plus
                 .font(

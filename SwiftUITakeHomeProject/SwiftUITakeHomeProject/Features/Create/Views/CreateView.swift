@@ -10,6 +10,7 @@ import SwiftUI
 struct CreateView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var vm = CreateViewModel()
+    let successfulAction: () -> Void
     
     var body: some View {
         NavigationView {
@@ -31,6 +32,7 @@ struct CreateView: View {
             .navigationTitle("Create")
             .onChange(of: vm.state) { newState in
                 if newState == .successfull {
+                    successfulAction()
                     dismiss()
                 }
             }
@@ -47,7 +49,7 @@ struct CreateView: View {
 
 struct CreateView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateView()
+        CreateView { }
     }
 }
 

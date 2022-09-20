@@ -12,13 +12,17 @@ class NetworkingManager {
     
     private init() {}
     
-    func request<T: Codable>(absoluteURL: String, type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+    func request<T: Codable>(absoluteURL: String,
+                             methodType: MethodType = .GET,
+                             type: T.Type,
+                             completion: @escaping (Result<T, Error>) -> Void) {
+        
         guard let url = URL(string: absoluteURL) else {
             completion(.failure(NetworkingError.invalidURL))
             return
         }
         
-        let request = URLRequest(url: url)
+        let request = createRequest(url: url, methodType: methodType)
         
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -51,6 +55,36 @@ class NetworkingManager {
         
         dataTask.resume()
     }
+    
+    func request(absoluteURL: String,
+                 methodType: MethodType = .GET,
+                 completion: @escaping (Result<Void, Error>) -> Void) {
+        
+        guard let url = URL(string: absoluteURL) else {
+            completion(.failure(NetworkingError.invalidURL))
+            return
+        }
+        
+        let request = createRequest(url: url, methodType: methodType)
+        
+        let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(NetworkingError.custom(error: error)))
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse,
+                  (200...300) ~= response.statusCode else {
+                let statusCode = (response as! HTTPURLResponse).statusCode
+                completion(.failure(NetworkingError.httpError(statusCode: statusCode)))
+                return
+            }
+            
+            completion(.success(()))
+        }
+        
+        dataTask.resume()
+    }
 }
 
 extension NetworkingManager {
@@ -60,5 +94,24 @@ extension NetworkingManager {
         case httpError(statusCode: Int)
         case invalidData
         case failedToDecode(error: Error)
+    }
+    
+    enum MethodType {
+        case GET
+        case POST(data: Data?)
+    }
+    
+    private func createRequest(url: URL, methodType: MethodType) -> URLRequest {
+        var request = URLRequest(url: url)
+        
+        switch methodType {
+        case .GET:
+            request.httpMethod = "GET"
+        case .POST(let data):
+            request.httpMethod = "POST"
+            request.httpBody = data
+        }
+        
+        return request
     }
 }

@@ -9,9 +9,7 @@ import SwiftUI
 
 struct CreateView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var firstName = ""
-    @State private var lastName = ""
-    @State private var job = ""
+    @StateObject var vm = CreateViewModel()
     
     var body: some View {
         NavigationView {
@@ -31,6 +29,16 @@ struct CreateView: View {
                 }
             }
             .navigationTitle("Create")
+            .onChange(of: vm.state) { newState in
+                if let newState = newState {
+                    switch newState {
+                    case .successfull:
+                        dismiss()
+                    case .unsuccessfull:
+                        print("error")
+                    }
+                }
+            }
         }
     }
 }
@@ -50,19 +58,19 @@ extension CreateView {
     
     var submit: some View {
         Button("Submit") {
-            //Submit form
+            vm.create()
         }
     }
     
     var firstNameTextField: some View {
-        TextField("First Name", text: $firstName)
+        TextField("First Name", text: $vm.newPeople.firstName)
     }
     
     var lastNameTextField: some View {
-        TextField("First Name", text: $lastName)
+        TextField("First Name", text: $vm.newPeople.lastName)
     }
     
     var jobTextField: some View {
-        TextField("Job", text: $job)
+        TextField("Job", text: $vm.newPeople.job)
     }
 }

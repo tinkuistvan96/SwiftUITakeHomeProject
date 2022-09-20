@@ -10,7 +10,9 @@ import Foundation
 final class CreateViewModel: ObservableObject {
     @Published var newPeople = NewPeople()
     @Published private(set) var state: CreateUserState?
-    
+    @Published private(set) var error: NetworkingManager.NetworkingError?
+    @Published var hasError = false
+
     func create() {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
@@ -22,12 +24,13 @@ final class CreateViewModel: ObservableObject {
                 switch result {
                 case .success():
                     self?.state = .successfull
-                case .failure(_):
+                case .failure(let error):
                     self?.state = .unsuccessfull
+                    self?.hasError = true
+                    self?.error = error as? NetworkingManager.NetworkingError
                 }
             }
         }
-        
     }
 }
 

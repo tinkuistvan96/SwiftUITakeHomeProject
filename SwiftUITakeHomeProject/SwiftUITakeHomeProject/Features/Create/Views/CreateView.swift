@@ -30,15 +30,11 @@ struct CreateView: View {
             }
             .navigationTitle("Create")
             .onChange(of: vm.state) { newState in
-                if let newState = newState {
-                    switch newState {
-                    case .successfull:
-                        dismiss()
-                    case .unsuccessfull:
-                        print("error")
-                    }
+                if newState == .successfull {
+                    dismiss()
                 }
             }
+            .alert(isPresented: $vm.hasError, error: vm.error) { }
         }
     }
 }

@@ -49,7 +49,7 @@ class NetworkingManager {
                 let res = try decoder.decode(T.self, from: data)
                 completion(.success(res))
             } catch {
-                completion(.failure(NetworkingError.failedToDecode(error: error)))
+                completion(.failure(NetworkingError.failedToDecode))
             }
         }
         
@@ -87,15 +87,34 @@ class NetworkingManager {
     }
 }
 
+//MARK: - Errors
 extension NetworkingManager {
-    enum NetworkingError: Error {
+    enum NetworkingError: LocalizedError {
         case invalidURL
         case custom(error: Error)
         case httpError(statusCode: Int)
         case invalidData
-        case failedToDecode(error: Error)
+        case failedToDecode
+        
+        var errorDescription: String? {
+            switch self {
+            case .invalidURL:
+                return "URL isn't valid"
+            case .custom(let error):
+                return "Something went wrong \(error.localizedDescription)"
+            case .httpError(let statusCode):
+                return "Something went wrong \(statusCode)"
+            case .invalidData:
+                return "Response data is invalid"
+            case .failedToDecode:
+                return "Failed to decode"
+            }
+        }
     }
-    
+}
+
+//MARK: - Request helper
+extension NetworkingManager {
     enum MethodType {
         case GET
         case POST(data: Data?)

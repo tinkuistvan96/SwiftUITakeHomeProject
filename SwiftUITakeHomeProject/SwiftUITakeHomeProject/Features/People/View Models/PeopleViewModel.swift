@@ -10,6 +10,8 @@ import Foundation
 final class PeopleViewModel: ObservableObject {
     //private(set) means: we can access this variable from other class but can't change it
     @Published private(set) var users = [User]()
+    @Published private(set) var error: NetworkingManager.NetworkingError?
+    @Published var hasError = false
     
     func fetchUsers() {
         NetworkingManager.shared.request(absoluteURL: "https://reqres.in/api/users",
@@ -19,7 +21,8 @@ final class PeopleViewModel: ObservableObject {
                 case .success(let response):
                     self?.users = response.data
                 case .failure(let error):
-                    print(error)
+                    self?.hasError = true
+                    self?.error = error as? NetworkingManager.NetworkingError
                 }
             }
         }

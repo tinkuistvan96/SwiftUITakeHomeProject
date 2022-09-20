@@ -14,9 +14,9 @@ final class CreateViewModel: ObservableObject {
     @Published var hasError = false
 
     func create() {
+        state = .submitting
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
-        
         
         let encoded = try? encoder.encode(newPeople)
         NetworkingManager.shared.request(absoluteURL: "https://reqres.in/api/users", methodType: .POST(data: encoded)) { [weak self] result in
@@ -36,6 +36,6 @@ final class CreateViewModel: ObservableObject {
 
 extension CreateViewModel {
     enum CreateUserState {
-        case successfull, unsuccessfull
+        case successfull, unsuccessfull, submitting
     }
 }

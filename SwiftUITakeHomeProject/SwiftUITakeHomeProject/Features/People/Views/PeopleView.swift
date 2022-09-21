@@ -49,6 +49,7 @@ struct PeopleView: View {
             }
             .sheet(isPresented: $showCreateView) {
                 CreateView {
+                    haptic(.success)
                     withAnimation(.spring().delay(0.25)) {
                         self.showPopover = true
                     }

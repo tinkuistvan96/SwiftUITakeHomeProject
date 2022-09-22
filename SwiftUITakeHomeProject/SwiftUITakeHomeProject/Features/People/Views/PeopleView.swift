@@ -15,6 +15,7 @@ struct PeopleView: View {
     @StateObject var vm = PeopleViewModel()
     @State private var showCreateView = false
     @State private var showPopover = false
+    @State private var dataIsLoaded = false
     
     var body: some View {
         NavigationView {
@@ -31,21 +32,38 @@ struct PeopleView: View {
                                     DetailView(userId: user.id)
                                 } label: {
                                     PersonItemView(user: user)
+                                        .task {
+                                            if vm.hasReachedEnd(of: user) && !vm.isFetching {
+                                                await vm.fetchNextPageOfUsers()
+                                            }
+                                        }
                                 }
                             }
                         }
                         .padding()
                     }
+                    .overlay(alignment: .bottom) {
+                        if vm.isFetching {
+                            ProgressView()
+                        }
+                    }
                 }
             }
             .navigationBarTitle("People")
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    refresh
+                }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     create
                 }
             }
             .task {
-                await vm.fetchUsers()
+                if dataIsLoaded == false {
+                    await vm.fetchUsers()
+                    dataIsLoaded = true
+                }
             }
             .sheet(isPresented: $showCreateView) {
                 CreateView {
@@ -91,6 +109,21 @@ extension PeopleView {
             showCreateView.toggle()
         } label: {
             Symbols.plus
+                .font(
+                    .system(.headline, design: .rounded)
+                    .bold()
+                )
+        }
+        .disabled(vm.isLoading)
+    }
+    
+    var refresh: some View {
+        Button {
+            Task {
+                await vm.fetchUsers()
+            }
+        } label: {
+            Symbols.refresh
                 .font(
                     .system(.headline, design: .rounded)
                     .bold()

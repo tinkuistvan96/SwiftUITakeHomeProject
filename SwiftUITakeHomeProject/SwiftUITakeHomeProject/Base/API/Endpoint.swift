@@ -9,7 +9,7 @@ import Foundation
 import CoreImage
 
 enum Endpoint {
-    case people
+    case people(page: Int)
     case detail(id: Int)
     case create(data: Data?)
 }
@@ -26,14 +26,31 @@ extension Endpoint {
         }
     }
     
+    var queryItems: [String: String]? {
+        switch self {
+        case .people(let page):
+            return ["page": "\(page)"]
+        default:
+            return nil
+        }
+    }
+    
     var url: URL? {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = host
         urlComponents.path = path
+        
+        var queryItems = self.queryItems?.compactMap { item in
+            URLQueryItem(name: item.key, value: item.value)
+        }
+        
         #if DEBUG
-        urlComponents.queryItems = [URLQueryItem(name: "delay", value: "1")]
+        queryItems?.append(URLQueryItem(name: "delay", value: "1"))
         #endif
+        
+        urlComponents.queryItems = queryItems
+        
         return urlComponents.url
     }
 }

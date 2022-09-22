@@ -12,17 +12,16 @@ class NetworkingManager {
     
     private init() {}
     
-    func request<T: Codable>(absoluteURL: String,
-                             methodType: MethodType = .GET,
+    func request<T: Codable>(endpoint: Endpoint,
                              type: T.Type,
                              completion: @escaping (Result<T, Error>) -> Void) {
         
-        guard let url = URL(string: absoluteURL) else {
+        guard let url = endpoint.url else {
             completion(.failure(NetworkingError.invalidURL))
             return
         }
         
-        let request = createRequest(url: url, methodType: methodType)
+        let request = createRequest(url: url, methodType: endpoint.methodType)
         
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -56,16 +55,15 @@ class NetworkingManager {
         dataTask.resume()
     }
     
-    func request(absoluteURL: String,
-                 methodType: MethodType = .GET,
+    func request(endpoint: Endpoint,
                  completion: @escaping (Result<Void, Error>) -> Void) {
         
-        guard let url = URL(string: absoluteURL) else {
+        guard let url = endpoint.url else {
             completion(.failure(NetworkingError.invalidURL))
             return
         }
         
-        let request = createRequest(url: url, methodType: methodType)
+        let request = createRequest(url: url, methodType: endpoint.methodType)
         
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -115,12 +113,7 @@ extension NetworkingManager {
 
 //MARK: - Request helper
 extension NetworkingManager {
-    enum MethodType {
-        case GET
-        case POST(data: Data?)
-    }
-    
-    private func createRequest(url: URL, methodType: MethodType) -> URLRequest {
+    private func createRequest(url: URL, methodType: Endpoint.MethodType) -> URLRequest {
         var request = URLRequest(url: url)
         
         switch methodType {

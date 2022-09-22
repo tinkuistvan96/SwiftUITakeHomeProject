@@ -33,6 +33,7 @@
 		4F77239B28DB714C00B76087 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F77239A28DB714C00B76087 /* SettingsView.swift */; };
 		4F77239E28DB721F00B76087 /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F77239D28DB721F00B76087 /* HapticsManager.swift */; };
 		4F7723A128DB753000B76087 /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7723A028DB753000B76087 /* UserDefaultKeys.swift */; };
+		4F84180128DC84BE00CE9EB5 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F84180028DC84BE00CE9EB5 /* Endpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		4F77239A28DB714C00B76087 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4F77239D28DB721F00B76087 /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
 		4F7723A028DB753000B76087 /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
+		4F84180028DC84BE00CE9EB5 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -305,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				4F77238B28D9091500B76087 /* NetworkingManager.swift */,
+				4F84180028DC84BE00CE9EB5 /* Endpoint.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				4F77237828D86BBA00B76087 /* UsersResponse.swift in Sources */,
 				4F77238228D88D5500B76087 /* PersonItemView.swift in Sources */,
 				4F7723A128DB753000B76087 /* UserDefaultKeys.swift in Sources */,
+				4F84180128DC84BE00CE9EB5 /* Endpoint.swift in Sources */,
 				4F77238E28D9184A00B76087 /* PeopleViewModel.swift in Sources */,
 				4F77238928D8FE7B00B76087 /* CreateView.swift in Sources */,
 				4F77239928DB65A000B76087 /* CreateValidator.swift in Sources */,

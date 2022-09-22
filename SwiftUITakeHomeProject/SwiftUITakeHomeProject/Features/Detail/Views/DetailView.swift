@@ -34,8 +34,8 @@ struct DetailView: View {
                 }
             }
         }
-        .onAppear {
-            vm.fetchUserInfo(id: userId)
+        .task {
+            await vm.fetchUserInfo(id: userId)
         }
         .alert(isPresented: $vm.hasError, error: vm.error) { }
         .navigationTitle("Details")

@@ -15,33 +15,30 @@ final class CreateViewModel: ObservableObject {
     
     let validator = CreateValidator()
 
-    func create() {
+    @MainActor
+    func create() async {
         do {
             try validator.validate(newPeople)
             
             state = .submitting
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
-            
             let encoded = try? encoder.encode(newPeople)
-            NetworkingManager.shared.request(endpoint: .create(data: encoded)) { [weak self] result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success():
-                        self?.state = .successfull
-                    case .failure(let error):
-                        self?.state = .unsuccessfull
-                        self?.hasError = true
-                        if let networkingError = error as? NetworkingManager.NetworkingError {
-                            self?.error = FormError.networking(error: networkingError)
-                        }
-                    }
-                }
-            }
+            
+            try await NetworkingManager.shared.request(endpoint: .create(data: encoded))
+            
+            state = .successfull
         } catch {
             hasError = true
-            if let validationError = error as? CreateValidator.CreateValidatorError {
-                self.error = FormError.validation(error: validationError)
+            state = .unsuccessfull
+            
+            switch error {
+            case is NetworkingManager.NetworkingError:
+                self.error = .networking(error: error as! NetworkingManager.NetworkingError)
+            case is CreateValidator.CreateValidatorError:
+                self.error = .validation(error: error as! CreateValidator.CreateValidatorError)
+            default:
+                self.error = .system(error: error)
             }
         }
     }
@@ -55,6 +52,7 @@ extension CreateViewModel {
     enum FormError: LocalizedError {
         case networking(error: LocalizedError)
         case validation(error: LocalizedError)
+        case system(error: Error)
         
         var errorDescription: String? {
             switch self {
@@ -62,6 +60,8 @@ extension CreateViewModel {
                 return err.errorDescription
             case .validation(let err):
                 return err.errorDescription
+            case .system(let err):
+                return err.localizedDescription
             }
         }
     }
